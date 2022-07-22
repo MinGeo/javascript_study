@@ -5,11 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-    <h1 id="hello">안녕하세요</h1>
+    <div class = "alert-box" id ="alert">
+        <p id = "title">알림창임</p>
+        <button id="close">닫기</button>
+    </div>
+    <button onclick="open_box('title', 1)">버튼1</button>
+    <button onclick="open_box('title', 2)">버튼2</button>
+
     <script>
-        document.getElementById('hello').style.fontSize = '16px';
+        document.getElementById('close').addEventListener('click', function(){
+            document.getElementById('alert').style.display ='none';
+        });
+        function open_box(a, b) {
+            document.getElementById(a).style.display='block';
+            if(b == 1)
+            {
+                document.getElementById(a).innerHTML = '아이디를입력하세요!';
+                document.getElementById('alert').style.display = 'block';
+            }
+            else {
+                document.getElementById(a).innerHTML = '비밀번호를입력하세요!';
+                document.getElementById('alert').style.display = 'block';
+            }
+            
+        }
     </script>
 </body>
 </html>

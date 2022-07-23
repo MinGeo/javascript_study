@@ -46,6 +46,81 @@
     <div class="alert alert-danger" id="test">
         5초동안 세일!!
     </div>
+    
+    <div style="overflow: hidden;">
+        <div class="slide-container">
+            <div class="slide-box">
+                <img src="car1.png">
+            </div>
+            <div class="slide-box">
+                <img src="car2.png">
+            </div>
+            <div class="slide-box">
+                <img src="car3.png">
+            </div>
+        </div>
+    </div>
+    <button class="slide-1">1</button>
+    <button class="slide-2">2</button>
+    <button class="slide-3">3</button>
+    <button class="next">다음</button>
+    <button class="prev">이전</button>
+    <div class="lorem" style="width: 200px; height: 100px; overflow-y: scroll">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae voluptas voluptatum minus praesentium fugit debitis at, laborum ipsa itaque placeat sit, excepturi eius. Nostrum perspiciatis, eligendi quae consectetur praesentium exercitationem.
+      </div> 
+    <script>
+        window.addEventListener('scroll', function(){
+            if(window.scrollY > 100)
+            {
+                document.querySelector('.navbar-brand').style.fontSize = '20px';
+            }
+            else if(window.scrollY == 0)
+            {
+                document.querySelector('.navbar-brand').style.fontSize = '30px';
+            }
+        });
+        document.querySelector('.lorem').addEventListener('scroll', function (){
+            var scrollvalue = document.querySelector('.lorem').scrollTop;
+            var realheight = document.querySelector('.lorem').scrollHeight;
+            var height = document.querySelector('.lorem').clientHeight;
+            if(scrollvalue + height > realheight-10 )
+            {
+                alert('다읽었네?');
+            }
+        })
+    </script>
+    <script>
+        var index = 1;
+        var max =  document.getElementsByClassName('slide-box').length;
+        document.querySelector('.slide-1').addEventListener('click', function(){
+            document.querySelector('.slide-container').style.transform = 'translateX(0)';
+            index = 1;
+        });
+        document.querySelector('.slide-2').addEventListener('click', function(){
+            document.querySelector('.slide-container').style.transform = 'translateX(-100vw)';
+            index = 2;
+        });
+        document.querySelector('.slide-3').addEventListener('click', function(){
+            document.querySelector('.slide-container').style.transform = `translateX(-200vw)`;
+            index = 3;
+        });
+        document.querySelector('.next').addEventListener('click', function(){
+            if(max == index){
+                index = 0;
+            }
+            document.querySelector('.slide-container').style.transform = `translateX(-${index}00vw)`;
+            index +=1;
+        });
+        document.querySelector('.prev').addEventListener('click', function(){
+            if(index == 1){
+                index = max;
+            }
+            else {
+                index = index -1;
+            }
+            document.querySelector('.slide-container').style.transform = `translateX(-${index-1}00vw)`;
+        });
+    </script>
     <script>
         var number = 5;
         setInterval(function(){
@@ -102,6 +177,10 @@
             {
                 e.preventDefault();
                 alert('짧네?');
+            }
+            else if( /[A-Z]/.test(document.querySelector('#pwd').value) == false)
+            {
+                alert('대문자 없네?');
             }
         });
     </script>

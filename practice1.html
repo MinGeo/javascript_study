@@ -8,6 +8,15 @@
     <link href = "css/practice1.css" rel="stylesheet">
 </head>
   <body>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <span class="navbar-brand">Navbar</span>
+            <span class="badge bg-dark">Dark 🔄</span>
+            <button class="navbar-toggler" type="button">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+    </nav>
     <div class="black-bg">
         <div class="white-bg">
             <h4>로그인하세요</h4>
@@ -23,15 +32,6 @@
             </form> 
         </div>
     </div>
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <span class="navbar-brand">Navbar</span>
-            <span class="badge bg-dark">Dark 🔄</span>
-            <button class="navbar-toggler" type="button">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
-    </nav>
     <ul class="list-group">
         <li class="list-group-item">An item</li>
         <li class="list-group-item">A second item</li>
@@ -46,7 +46,6 @@
     <div class="alert alert-danger" id="test">
         5초동안 세일!!
     </div>
-    
     <div style="overflow: hidden;">
         <div class="slide-container">
             <div class="slide-box">
@@ -87,7 +86,7 @@
             {
                 alert('다읽었네?');
             }
-        })
+        });
     </script>
     <script>
         var index = 1;
@@ -139,11 +138,18 @@
             document.querySelectorAll('.list-group')[0].classList.toggle('show');
         });
         document.querySelector('#login').addEventListener('click', function(){
-            document.querySelector('.black-bg').classList.toggle('show');
+            document.querySelector('.black-bg').classList.add('show');
         });
         document.querySelector('#close').addEventListener('click', function(){
-            document.querySelector('.black-bg').classList.toggle('close');
+            document.querySelector('.black-bg').classList.remove('show');
         });
+        document.querySelector('.black-bg').addEventListener('click', function(e){
+            if(e.target == document.querySelector('.black-bg'))
+            {
+                document.querySelector('.black-bg').classList.remove('show');
+            }
+            
+        })
     </script>
     <script>
         var count = 0;

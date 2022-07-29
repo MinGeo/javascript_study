@@ -10,26 +10,103 @@
   <body>
     <div class="container">
       <div class="row">
-    
           <div class="col-sm-4">
             <img src="https://via.placeholder.com/600" class="w-100">
             <h5>Card title</h5>
             <p>가격 : 70000</p>
           </div>
-    
       </div>
-    </div> 
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-      <script>
-        document.querySelector('.row').innerHTML = '';
-        var tablet = '<div class="col-sm-4"><img src="https://via.placeholder.com/600" class="w-100"><h5>Card title</h5><p>가격 : 70000</p></div>';
-        for(let i = 0; i < 3; i++)
-        {
-          document.querySelector('.row').insertAdjacentHTML('beforeend',tablet);
-        }
-      </script>
-      <script>
-       
-      </script> 
+      <div class="row">
+      </div>
+      <div class="row"></div>
+    </div>
+    <div class = "container">
+      <button class="btn btn-danger" id = "more">더보기</button>
+      <button class="btn btn-primary" id = "sort">가격순정렬</button>
+      <button class="btn btn-danger" id = "cba">다나가정렬</button>
+      <button class="btn btn-primary" id = "cheap">6만원이하</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>     
+      var num = 0;
+      document.querySelector('#more').addEventListener('click', function(){
+        num += 1;
+        $.get(`https://codingapple1.github.io/js/more${num}.json`).done(function(data){
+          for(var key in data){
+            var tablet = `<div class="col-sm-4"><img src="https://via.placeholder.com/600" class="w-100"><h5>${data[key].title}</h5><p>가격 : ${data[key].price}</p><button class = "buy">구매</button></div>`;
+            document.querySelectorAll('.row')[num].insertAdjacentHTML('beforeend', tablet);
+          }
+          if(num == 2){
+            document.querySelector('#more').style.display='none';
+          }
+          $('.buy').click(function(){
+            var title = $(event.target).siblings('h5').text();
+            if(localStorage.getItem('cart') != null)
+            {
+              console.log(title);
+              var preArr = JSON.parse(localStorage.cart);
+              preArr.push(title);
+              console.log(preArr);
+              localStorage.setItem('cart', JSON.stringify(preArr));
+            }
+            else {
+              localStorage.setItem('cart', JSON.stringify([title]));
+            }
+          });
+        });
+      });
+      
+      document.querySelector('#sort').addEventListener('click', function(){
+        $.get(`https://codingapple1.github.io/js/more1.json`).done(function(data){
+          data.sort(function(a,b){
+            return a.price - b.price;
+          });
+          document.querySelectorAll('.row')[1].innerHTML = '';
+          for(var key in data){
+            var tablet = `<div class="col-sm-4"><img src="https://via.placeholder.com/600" class="w-100"><h5>${data[key].title}</h5><p>가격 : ${data[key].price}</p></div>`;
+            document.querySelectorAll('.row')[1].insertAdjacentHTML('beforeend', tablet);
+          }
+        })
+      });
+      document.querySelector('#cba').addEventListener('click', function(){
+        $.get(`https://codingapple1.github.io/js/more1.json`).done(function(data){
+          data.sort(function(a,b){
+            if(a.title < b.title)
+            {
+              return 1;
+            }
+            else {
+              return -1;
+            }
+          });
+          document.querySelectorAll('.row')[1].innerHTML = '';
+          for(var key in data){
+            var tablet = `<div class="col-sm-4"><img src="https://via.placeholder.com/600" class="w-100"><h5>${data[key].title}</h5><p>가격 : ${data[key].price}</p></div>`;
+            document.querySelectorAll('.row')[1].insertAdjacentHTML('beforeend', tablet);
+          }
+        })
+      });
+      document.querySelector('#cheap').addEventListener('click', function(){
+        $.get(`https://codingapple1.github.io/js/more1.json`).done(function(data){
+          newdata = data.filter(function(a){
+            return a.price < 60000;
+          })
+          document.querySelectorAll('.row')[1].innerHTML = '';
+          for(var key in newdata){
+            var tablet = `<div class="col-sm-4"><img src="https://via.placeholder.com/600" class="w-100"><h5>${newdata[key].title}</h5><p>가격 : ${newdata[key].price}</p></div>`;
+            document.querySelectorAll('.row')[1].insertAdjacentHTML('beforeend', tablet);
+          }
+        })
+      });
+    </script>
+    <script>
+      document.querySelector('.row').innerHTML = '';
+      var tablet = '<div class="col-sm-4"><img src="https://via.placeholder.com/600" class="w-100"><h5>Card title</h5><p>가격 : 70000</p><button class = "buy">구매</button></div>';
+      for(let i = 0; i < 3; i++)
+      {
+        document.querySelectorAll('.row')[0].insertAdjacentHTML('beforeend',tablet);
+      }
+    </script> 
+   
   </body>
 </html>

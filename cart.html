@@ -1,0 +1,13 @@
+<div>장바구니 페이지</div>
+<div class = "list">
+
+</div>
+
+<script>
+    var temp = JSON.parse(localStorage.cart);
+    console.log(temp);
+    temp.forEach(function(a, i){
+        var tablet = `<div>${temp[i]}</div>`;
+        document.querySelector('.list').insertAdjacentHTML('beforeend', tablet);
+    })
+</script>
